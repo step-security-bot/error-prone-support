@@ -1,0 +1,10 @@
+{
+  "name": "TestChecker",
+  "identificationTests": [],
+  "replacementTests": [
+    {
+      "inputLines": "class A {}\n",
+      "outputLines": "class A {}\n"
+    }
+  ]
+}
