@@ -1,0 +1,8 @@
+{
+  "name": "TestChecker",
+  "identificationTests": [
+    "class B {}\n",
+    "class A {}\n"
+  ],
+  "replacementTests": []
+}
