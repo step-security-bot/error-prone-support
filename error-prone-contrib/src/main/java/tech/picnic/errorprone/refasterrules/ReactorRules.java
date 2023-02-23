@@ -741,9 +741,7 @@ final class ReactorRules {
   static final class MonoSingleOptional<T> {
     @BeforeTemplate
     Mono<Optional<T>> before(Mono<T> mono) {
-      return Refaster.anyOf(
-          mono.flux().collect(toOptional()),
-          mono.map(Optional::of).defaultIfEmpty(Optional.empty()));
+      return Refaster.anyOf(mono.flux().collect(toOptional()), mono.flux().collect(toOptional()));
     }
 
     @AfterTemplate
