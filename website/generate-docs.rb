@@ -18,8 +18,8 @@ repo_url = "https://github.com/PicnicSupermarket/error-prone-support/blob/master
 
 def retrieve_patterns(path)
   Dir.glob("#{path}/*.json").inject({ "bug_patterns" => {}, "refaster_rules" => {} }) { |memo, file_name|
-    if (match = /.+(?<type>bug-pattern|refaster).*-(?<name>\w+?)(Test(Input|Output)?)?\.json/.match file_name)
-      type, name = match[:type] == 'bug-pattern' ? 'bug_patterns' : 'refaster_rules', match[:name]
+    if (match = /.+(?<type>bugpattern|refaster).*-(?<name>\w+?)(Test(Input|Output)?)?\.json/.match file_name)
+      type, name = match[:type] == 'bugpattern' ? 'bug_patterns' : 'refaster_rules', match[:name]
       memo[type][name] ||= []
       memo[type][name] << file_name
       memo
@@ -114,12 +114,15 @@ patterns['refaster_rules'].values.each { |files|
     next
   end
 
+  p "Collection: #{collection_name}"
+
   rules = []
   # XXX: Once we have rule non-test data, iterate over that instead and extract input like we do output now.
   collection_files['test_input']["templateTests"].each { |rule|
     rule_name = rule['templateName']
     # We need to strip newlines and add them to the end as a workaround to https://github.com/samg/diffy/issues/88.
     input = "#{rule['templateTestContent'].strip}\n"
+    p "Rule name: #{rule_name}"
     output = "#{collection_files['test_output']['templateTests'].find { |testCase| testCase['templateName'] == rule_name }['templateTestContent'].strip}\n"
     rules << {
       collection_name: collection_name,

@@ -17,7 +17,7 @@ import tech.picnic.errorprone.documentation.models.RefasterTemplateTestData;
 @AutoService(Extractor.class)
 public final class RefasterTestInputExtractor
     implements Extractor<RefasterTemplateCollectionTestData> {
-  private static final Pattern TEST_INPUT_CLASS_NAME_PATTERN = Pattern.compile("(.*)TestInput");
+  private static final Pattern TEST_CLASS_NAME_PATTERN = Pattern.compile("(.*)Test");
 
   @Override
   public String identifier() {
@@ -27,6 +27,10 @@ public final class RefasterTestInputExtractor
   @Override
   public Optional<RefasterTemplateCollectionTestData> tryExtract(
       ClassTree tree, VisitorState state) {
+    if (!state.getPath().getCompilationUnit().getPackageName().toString().contains("input")) {
+      return Optional.empty();
+    }
+
     Optional<String> className = getClassUnderTest(tree);
     if (className.isEmpty()) {
       return Optional.empty();
@@ -48,7 +52,7 @@ public final class RefasterTestInputExtractor
   }
 
   private static Optional<String> getClassUnderTest(ClassTree tree) {
-    return Optional.of(TEST_INPUT_CLASS_NAME_PATTERN.matcher(tree.getSimpleName().toString()))
+    return Optional.of(TEST_CLASS_NAME_PATTERN.matcher(tree.getSimpleName().toString()))
         .filter(java.util.regex.Matcher::matches)
         .map(m -> m.group(1));
   }

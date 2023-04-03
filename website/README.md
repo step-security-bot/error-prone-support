@@ -14,7 +14,7 @@ patterns and Refaster rule collections. Unless, these classes have been
 changed, this only needs to be executed once.
 
 ```sh
-mvn -T1C clean install -DskipTests -Dverification.warn
+mvn -T1C clean install -DskipTests -Dverification.skip -Pdocgen
 ```
 
 Then to generate the website content, execute in this
