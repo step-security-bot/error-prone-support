@@ -1,4 +1,4 @@
-package tech.picnic.errorprone.refasterrules;
+package tech.picnic.errorprone.refasterrules.input;
 
 import com.google.errorprone.fixes.SuggestedFix;
 import com.sun.source.tree.ExpressionTree;
