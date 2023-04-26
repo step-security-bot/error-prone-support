@@ -28,7 +28,7 @@ parent: Refaster Rules
 > Suppression
 >
 {{! XXX: Create an internal page on documenting the usage of compiler flags. }}
-> Disable all rules by adding `-XepOpt:Refaster:NamePattern=^(?!({{collection_name}}.*))` as 
+> Disable all rules by adding `-XepOpt:Refaster:NamePattern=^(?!{{collection_name}}\$).*` as 
 > compiler argument.
 
 <details open markdown="block">
@@ -59,7 +59,7 @@ parent: Refaster Rules
 > the enclosing element.
 >
 {{! XXX: Create an internal page on documenting the usage of compiler flags. }}
-> Disable this rule by adding `-XepOpt:Refaster:NamePattern=^(?!({{collection_name}}\.{{rule_name}}))` 
+> Disable this rule by adding `-XepOpt:Refaster:NamePattern=^(?!{{collection_name}}\${{rule_name}}).*` 
 > as compiler argument.
 
 ### Samples
