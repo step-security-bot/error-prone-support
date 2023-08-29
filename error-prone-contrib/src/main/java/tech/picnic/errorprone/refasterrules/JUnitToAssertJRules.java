@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -42,6 +43,90 @@ import tech.picnic.errorprone.refaster.annotation.OnlineDocumentation;
 @OnlineDocumentation
 final class JUnitToAssertJRules {
   private JUnitToAssertJRules() {}
+
+  // XXX: This rule assumes that `expected` and `actual` are not both `null`.
+  static final class AssertThatBooleanArrayContainsExactly {
+    @BeforeTemplate
+    void before(boolean[] actual, boolean[] expected) {
+      assertArrayEquals(expected, actual);
+    }
+
+    @AfterTemplate
+    @UseImportPolicy(STATIC_IMPORT_ALWAYS)
+    void after(boolean[] actual, boolean[] expected) {
+      assertThat(actual).containsExactly(expected);
+    }
+  }
+
+  // XXX: This rule assumes that `expected` and `actual` are not both `null`.
+  static final class AssertThatBooleanArrayWithFailMessageContainsExactly {
+    @BeforeTemplate
+    void before(boolean[] actual, String message, boolean[] expected) {
+      assertArrayEquals(expected, actual, message);
+    }
+
+    @AfterTemplate
+    @UseImportPolicy(STATIC_IMPORT_ALWAYS)
+    void after(boolean[] actual, String message, boolean[] expected) {
+      assertThat(actual).withFailMessage(message).containsExactly(expected);
+    }
+  }
+
+  // XXX: This rule assumes that `expected` and `actual` are not both `null`.
+  static final class AssertThatBooleanArrayWithFailMessageSupplierContainsExactly {
+    @BeforeTemplate
+    void before(boolean[] actual, Supplier<String> message, boolean[] expected) {
+      assertArrayEquals(expected, actual, message);
+    }
+
+    @AfterTemplate
+    @UseImportPolicy(STATIC_IMPORT_ALWAYS)
+    void after(boolean[] actual, Supplier<String> message, boolean[] expected) {
+      assertThat(actual).withFailMessage(message).containsExactly(expected);
+    }
+  }
+
+  // XXX: This rule assumes that `expected` and `actual` are not both `null`.
+  static final class AssertThatByteArrayContainsExactly {
+    @BeforeTemplate
+    void before(byte[] actual, byte[] expected) {
+      assertArrayEquals(expected, actual);
+    }
+
+    @AfterTemplate
+    @UseImportPolicy(STATIC_IMPORT_ALWAYS)
+    void after(byte[] actual, byte[] expected) {
+      assertThat(actual).containsExactly(expected);
+    }
+  }
+
+  // XXX: This rule assumes that `expected` and `actual` are not both `null`.
+  static final class AssertThatByteArrayWithFailMessageContainsExactly {
+    @BeforeTemplate
+    void before(byte[] actual, String message, byte[] expected) {
+      assertArrayEquals(expected, actual, message);
+    }
+
+    @AfterTemplate
+    @UseImportPolicy(STATIC_IMPORT_ALWAYS)
+    void after(byte[] actual, String message, byte[] expected) {
+      assertThat(actual).withFailMessage(message).containsExactly(expected);
+    }
+  }
+
+  // XXX: This rule assumes that `expected` and `actual` are not both `null`.
+  static final class AssertThatByteArrayWithFailMessageSupplierContainsExactly {
+    @BeforeTemplate
+    void before(byte[] actual, Supplier<String> message, byte[] expected) {
+      assertArrayEquals(expected, actual, message);
+    }
+
+    @AfterTemplate
+    @UseImportPolicy(STATIC_IMPORT_ALWAYS)
+    void after(byte[] actual, Supplier<String> message, byte[] expected) {
+      assertThat(actual).withFailMessage(message).containsExactly(expected);
+    }
+  }
 
   static final class ThrowNewAssertionError {
     @BeforeTemplate
