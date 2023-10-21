@@ -157,4 +157,4 @@ puts 'Generating website using Jekyll...'
 system('bundle exec jekyll build')
 
 puts 'Validating website...'
-system('bundle exec htmlproofer --check-external-hash false ./_site')
+system('bundle exec htmlproofer --no-check-external-hash ./_site')
