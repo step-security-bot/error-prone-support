@@ -152,7 +152,9 @@ final class StreamRulesTest implements RefasterRuleCollectionTestCase {
 
   ImmutableSet<Boolean> testStreamNoneMatch() {
     Predicate<String> pred = String::isBlank;
-    Function<String, Boolean> toBooleanFunction = Boolean::valueOf;
+    // Not using Boolean::valueOf due to
+    // https://github.com/google/error-prone/pull/4157.
+    Function<String, Boolean> toBooleanFunction = s -> false;
     return ImmutableSet.of(
         Stream.of("foo").noneMatch(s -> s.length() > 1),
         Stream.of("bar").noneMatch(String::isBlank),
@@ -169,7 +171,9 @@ final class StreamRulesTest implements RefasterRuleCollectionTestCase {
   }
 
   ImmutableSet<Boolean> testStreamAnyMatch() {
-    Function<String, Boolean> toBooleanFunction = Boolean::valueOf;
+    // Not using Boolean::valueOf due to
+    // https://github.com/google/error-prone/pull/4157.
+    Function<String, Boolean> toBooleanFunction = s -> false;
     return ImmutableSet.of(
         Stream.of("foo").anyMatch(s -> s.length() > 1),
         Stream.of("bar").anyMatch(String::isEmpty),
@@ -180,7 +184,9 @@ final class StreamRulesTest implements RefasterRuleCollectionTestCase {
 
   ImmutableSet<Boolean> testStreamAllMatch() {
     Predicate<String> pred = String::isBlank;
-    Function<String, Boolean> toBooleanFunction = Boolean::valueOf;
+    // Not using Boolean::valueOf due to
+    // https://github.com/google/error-prone/pull/4157.
+    Function<String, Boolean> toBooleanFunction = s -> false;
     return ImmutableSet.of(
         Stream.of("foo").allMatch(String::isBlank),
         Stream.of("bar").allMatch(pred),

@@ -1,4 +1,4 @@
-package tech.picnic.errorprone.refasterrules;
+package tech.picnic.errorprone.refasterrules.input;
 
 import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableSet;
@@ -13,10 +13,10 @@ final class PatternRulesTest implements RefasterRuleCollectionTestCase {
   }
 
   Predicate<?> testPatternAsPredicate() {
-    return Pattern.compile("foo").asPredicate();
+    return Predicates.contains(Pattern.compile("foo"));
   }
 
   Predicate<?> testPatternCompileAsPredicate() {
-    return Pattern.compile("foo").asPredicate();
+    return Predicates.containsPattern("foo");
   }
 }

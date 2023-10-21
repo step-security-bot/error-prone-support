@@ -1,4 +1,4 @@
-package tech.picnic.errorprone.refasterrules;
+package tech.picnic.errorprone.refasterrules.input;
 
 import com.google.common.collect.ImmutableSet;
 import java.io.IOException;
@@ -7,20 +7,20 @@ import tech.picnic.errorprone.refaster.test.RefasterRuleCollectionTestCase;
 
 final class ClassRulesTest implements RefasterRuleCollectionTestCase {
   boolean testClassIsInstance() throws IOException {
-    return CharSequence.class.isInstance("foo");
+    return CharSequence.class.isAssignableFrom("foo".getClass());
   }
 
   ImmutableSet<Boolean> testInstanceof() throws IOException {
     Class<?> clazz = CharSequence.class;
-    return ImmutableSet.of("foo" instanceof CharSequence, clazz.isInstance("bar"));
+    return ImmutableSet.of(CharSequence.class.isInstance("foo"), clazz.isInstance("bar"));
   }
 
   Predicate<String> testClassLiteralIsInstancePredicate() throws IOException {
-    return CharSequence.class::isInstance;
+    return s -> s instanceof CharSequence;
   }
 
   Predicate<String> testClassReferenceIsInstancePredicate() throws IOException {
     Class<?> clazz = CharSequence.class;
-    return clazz::isInstance;
+    return s -> clazz.isInstance(s);
   }
 }
