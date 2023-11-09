@@ -15,6 +15,7 @@ import com.google.errorprone.VisitorState;
 import com.google.errorprone.bugpatterns.BugChecker;
 import com.google.errorprone.bugpatterns.BugChecker.MethodTreeMatcher;
 import com.google.errorprone.fixes.SuggestedFix;
+import com.google.errorprone.fixes.SuggestedFixes;
 import com.google.errorprone.matchers.Description;
 import com.google.errorprone.matchers.MultiMatcher;
 import com.sun.source.tree.AnnotationTree;
@@ -27,10 +28,6 @@ import javax.lang.model.element.Modifier;
     summary = "JUnit method declaration can likely be improved",
     severity = WARNING,
     tags = SIMPLIFICATION)
-@SuppressWarnings({
-  "UnusedMethod",
-  "UnusedVariable"
-} /* This check is yet to be implemented as part of the demo. */)
 public final class JUnitTestMethodDeclaration extends BugChecker implements MethodTreeMatcher {
   private static final long serialVersionUID = 1L;
   private static final ImmutableSet<Modifier> ILLEGAL_MODIFIERS =
@@ -43,12 +40,13 @@ public final class JUnitTestMethodDeclaration extends BugChecker implements Meth
 
   @Override
   public Description matchMethod(MethodTree tree, VisitorState state) {
-    // XXX: Part 1: Return `Description.NO_MATCH` if the method is not a `TEST_METHOD`.
+    if (!TEST_METHOD.matches(tree, state)) {
+      return Description.NO_MATCH;
+    }
 
     SuggestedFix.Builder fixBuilder = SuggestedFix.builder();
-
-    // XXX: Part 2: Make sure that JUnit test methods don't use `ILLEGAL_MODIFIERS` by using
-    // `SuggestedFixes#removeModifiers` and `SuggestedFix.Builder#merge`.
+    SuggestedFixes.removeModifiers(tree.getModifiers(), state, ILLEGAL_MODIFIERS)
+        .ifPresent(fixBuilder::merge);
 
     if (fixBuilder.isEmpty()) {
       return Description.NO_MATCH;

@@ -14,11 +14,11 @@ import com.google.errorprone.bugpatterns.BugChecker.ClassTreeMatcher;
 import com.google.errorprone.matchers.Description;
 import com.google.errorprone.matchers.MultiMatcher;
 import com.google.errorprone.matchers.MultiMatcher.MultiMatchResult;
+import com.google.errorprone.util.ASTHelpers;
 import com.sun.source.tree.AnnotationTree;
 import com.sun.source.tree.ClassTree;
 import com.sun.source.tree.MethodTree;
 import com.sun.source.tree.Tree;
-import java.util.ArrayList;
 import java.util.List;
 import tech.picnic.errorprone.workshop.bugpatterns.util.SourceCode;
 
@@ -38,9 +38,10 @@ public final class DropAutowiredConstructorAnnotation extends BugChecker
 
   @Override
   public Description matchClass(ClassTree tree, VisitorState state) {
-    // XXX: Using the `ASTHelpers#getConstructors` method, return `Description.NO_MATCH` if we do
-    // not have exactly 1 constructor (so drop the `new ArrayList<>()` part).
-    List<MethodTree> constructors = new ArrayList<>();
+    List<MethodTree> constructors = ASTHelpers.getConstructors(tree);
+    if (constructors.size() != 1) {
+      return Description.NO_MATCH;
+    }
 
     MultiMatchResult<AnnotationTree> hasAutowiredAnnotation =
         AUTOWIRED_ANNOTATION.multiMatchResult(Iterables.getOnlyElement(constructors), state);
