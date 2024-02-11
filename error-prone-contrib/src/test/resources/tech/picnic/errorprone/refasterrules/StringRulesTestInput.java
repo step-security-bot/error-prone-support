@@ -96,4 +96,8 @@ final class StringRulesTest implements RefasterRuleCollectionTestCase {
   int testUtf8EncodedLength() {
     return "foo".getBytes(UTF_8).length;
   }
+
+  String testStringFormat() {
+    return String.format("%s%s", "foo", "bar");
+  }
 }
