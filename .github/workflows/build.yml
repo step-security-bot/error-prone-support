@@ -30,6 +30,11 @@ jobs:
       # on Maven Central, and once against the Picnic Error Prone fork,
       # additionally enabling all checks defined in this project and any Error
       # Prone checks available only from other artifact repositories.
+      - name: Harden Runner
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
+        with:
+          egress-policy: audit
+
       - name: Check out code and set up JDK and Maven
         uses: s4u/setup-maven-action@6d44c18d67d9e1549907b8815efa5e4dada1801b # v1.12.0
         with:
